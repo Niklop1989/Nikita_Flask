@@ -1,0 +1,21 @@
+version: latest
+services:
+  app:
+    container_name: flask_container
+    build: .
+    ports:
+      - "5000:5000"
+  postgres:
+    container_name: skillbox
+    image: postgres
+    environment:
+      - POSTGRES_DB=nikit
+      - POSTGRES_USER=nikit
+      - POSTGRES_PASSWORD=nikit
+      - log_destination=stderr
+      - logging_collector=on
+      - log_directory=/var/bin/postgresql/log
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db/:/var/lib/postgresql/data
