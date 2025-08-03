@@ -1,0 +1,24 @@
+name: Test program
+on: workflow_dispatch
+jobs:
+  test_my_program:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test my program
+        uses: actions/checkout@v3
+      - name: Install depend
+        uses: actions/setup-python@v2 
+      - name: Install dependencies
+        run:  |
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Run isort
+        run: isort .
+      - name: Run black
+        run: black .  
+      - name: Run flake8
+        run: autoflake --in-place --remove-all-unused-imports --remove-unused-variables --recursive .
+      - name: Run pytest
+        run: | 
+              export PYTHONPATH=PYTHONPATH:$(pwd)
+              pytest tests/ .
